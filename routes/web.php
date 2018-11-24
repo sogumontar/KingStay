@@ -12,43 +12,16 @@
 */
 
 Route::get('/', function () {
-    return view('/index');
+    return view('welcome');
 });
 
-Route::group(['prefix'=>'kendaraan'],function(){
-   
-    Route::get('/','KendaraanController1@index');
-    Route::get('/create','KendaraanController1@create');
-    Route::get('/store','KendaraanController1@store');
-    Route::get('/show/{id}','KendaraanController1@show');
-    Route::get('/update{id}','KendaraanController1@update');
-    Route::get('/destroy/{id}','KendaraanController1@destroy');
-    Route::get('/belajar','BelajarController@getpage');
-    Route::get('/test','mobilController@create');
-     
-});
-
-//Route::get('/', 'WelcomeController@index');
 Auth::routes();
-
+Route::view('/register', 'register');
+Route::view('/login', 'login');
+Route::post('/store','userController@store')->name('user.register');
+Route::post('/login','userController@login')->name('user.login');
 Route::get('/home', 'HomeController@index')->name('home');
-Route::get('/mobil/create','mobilController@create')->name('mobil.create');
-Route::get('homestay/create','homestayController@create')->name('homestay.create');
-Route::post('homestay/create','homestayController@store')->name('homestay.store');
-Route::get('homestay/view','homestayController@view')->name('homestay.view');
-Route::get('homestay/{id}/edit','homestayController@edit')->name('homestay.edit');
-Route::patch('homestay/{id}/edit','homestayController@update')->name('homestay.update');
-// Route::delete('homestay/{homestay}/destroy','homestayController@destroy')->name('homestay.destroy');
-
-Route::delete('/homestay/{homestay}/delete','homestayController@destroy')->name('homestay.destroy');
-Route::get('admin','AdminController@index')->middleware('role:admin');
-// Route::get('/homestay/{id}/edit','homestayController@edit')->name('homestay.edit');
-
-// Route::group(['middleware'=>['web','auth','roles']],function(){
-// 	Route::group(['roles'->'Member'],function(){
-// 		Route::resources('site','SiteController');
-// 	});
-// 	Route::group(['roles'->'Admin'],function(){
-// 		Route::resource('user','UserController');
-// 	});
-// });
+Route::get('/welcome', 'HomeController@index')->name('welcome');
+Route::get('/post/create', 'PostController@create')->name('post.create');
+Route::post('/post/create', 'PostController@store')->name('post.store');
+Route::get('/post','PostController@view')->name('post.view');
